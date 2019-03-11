@@ -1,0 +1,190 @@
+<style>
+
+html, body {
+  height: 100%;
+}
+
+html {
+  background: #eee;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+  background: #fbfcee;
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.wave {
+  opacity: .4;
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  background: #0af;
+  width: 1700px;
+  height: 1500px;
+  margin-left: -700px;
+  margin-top: -150px;
+  -webkit-transform-origin: 50% 48%;
+          transform-origin: 50% 48%;
+  border-radius: 43%;
+  -webkit-animation: drift 3000ms infinite linear;
+          animation: drift 3000ms infinite linear;
+}
+
+.wave.-three {
+  -webkit-animation: drift 5000ms infinite linear;
+          animation: drift 5000ms infinite linear;
+}
+
+.wave.-two {
+  -webkit-animation: drift 7000ms infinite linear;
+          animation: drift 7000ms infinite linear;
+  opacity: .1;
+  background: yellow;
+}
+
+.box:after {
+  content: '';
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, #ee88aa, rgba(221, 238, 255, 0) 80%, white);
+  z-index: 11;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  line-height: 800px;
+  text-align: center;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  color: white;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: .4em;
+  font-size: 24px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  text-indent: .3em;
+}
+
+@-webkit-keyframes drift {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  from {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  from {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+</style>
+
+
+      
+      <div class='box'>
+  <div class='wave -one'></div>
+  <div class='wave -two'></div>
+  <div class='wave -three'></div>
+  <div class='title'>
+
+<div class="container">
+    
+    <%= @post.image1.url %>
+    <%= @post.title1 %>
+    <%= @post.title2 %>
+    <% if @post.image1.present? %>
+            
+        <% if @post.image2.present? %>
+        
+        <% end %>
+        
+    <% end %>
+   <a href="/">다음가기</a>
+        <%= @post.content %>
+        
+    <img src="<%= @post.image1.url %>">
+    <img src="<%= @post.image2.url %>">
+    
+       
+      <p>
+        <% if current_user.is_like? (@post) %>
+        <form action='/main/<%= @post.id%>/like' method='post'>
+          <input type="hidden" name="pick" value="<%= @post.title1 %>">
+        <button> 좋아요 취소 </button>  
+        </form>
+        
+        <% else %>
+        <form action='/main/<%= @post.id%>/like' method='post'>
+          <input type="hidden" name="pick" value="<%= @post.title1 %>">
+        <button> 좋아요</button>  
+        </form>
+        
+        <% end %>
+      </p>
+
+ 
+    
+    <form action ="/comment/create">
+          <select name="category" class="ui dropdown" id="select">
+            
+              <option value="<%= @post.title1 %>"><%= @post.title1 %></option>
+              <option value="<%= @post.title2 %>"><%= @post.title1 %></option>
+              
+          </select>
+          
+          <input type="hidden" name="post_id" value="<%= @post.id %>">
+          <input type="text" name="content" >
+          <input type="submit">
+    </form>
+    
+    
+    <% if @post.comments.present? %> 
+    <ul class="collection">
+         <% @post.comments.each do |comment| %>
+         <li class="collection-item"> 
+             <span class="right">
+                 </span>
+                 <p><%= comment.content %></p>
+                
+                 <% end %> 
+                 </li>
+                 <% end %>
+                 </ul> 
+      
+      </div>
+</div>
+
+
+</div>

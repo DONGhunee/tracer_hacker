@@ -1,0 +1,44 @@
+
+
+
+
+<div class="container">
+    
+    <form action="/post/create">
+        
+        <input type="text" name="title1" required>
+        <input type="file" name="image1" accept="image/*" onchange="loadFile(event)">
+        <img id="output" style="width:40px"/>
+        <input type="text" name="title2" required>
+        <input type="file" name="image2" accept="image/*" onchange="loadFile1(event)">
+        <img id="output1" style="width:40px"/>
+         <div class="field">
+            <label></label>
+            <textarea name="content" required></textarea>
+          </div>
+        <input type="submit">
+    </form>
+</div>    
+
+
+
+
+<script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('output');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+  
+  var loadFile1 = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output1 = document.getElementById('output1');
+      output1.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+</script>
